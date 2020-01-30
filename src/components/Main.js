@@ -76,37 +76,43 @@ class Main extends Component {
           >
             <div className="content mr-auto ml-auto">
               <p>&nbsp;</p>
-              <form onSubmit={this.onSubmit}>
-                <div className="form-group mr-sm-2">
-                  <input
-                    id="filename"
-                    type="text"
-                    onChange={this.handleChange}
-                    className="form-control my-2"
-                    placeholder="Enter File Name"
-                    required
-                  />
-
-                  <div className="custom-file">
+              {this.props.accounts[this.props.account] ==
+              "The Project Manager" ? (
+                <span></span>
+              ) : (
+                <form onSubmit={this.onSubmit}>
+                  <div className="form-group mr-sm-2">
                     <input
-                      id="hashcode"
-                      type="file"
-                      ref={input => {
-                        this.hashcode = input;
-                      }}
-                      className="custom-file-input"
-                      onChange={this.captureFile}
+                      id="filename"
+                      type="text"
+                      onChange={this.handleChange}
+                      className="form-control my-2"
+                      placeholder="Enter File Name"
                       required
                     />
-                    <label className="custom-file-label">
-                      Upload Your File
-                    </label>
+
+                    <div className="custom-file">
+                      <input
+                        id="hashcode"
+                        type="file"
+                        ref={input => {
+                          this.hashcode = input;
+                        }}
+                        className="custom-file-input"
+                        onChange={this.captureFile}
+                        required
+                      />
+                      <label className="custom-file-label">
+                        Upload Your File
+                      </label>
+                    </div>
                   </div>
-                </div>
-                <button type="submit" className="btn btn-primary btn-block">
-                  Upload
-                </button>
-              </form>
+                  <button type="submit" className="btn btn-primary btn-block">
+                    Upload
+                  </button>
+                </form>
+              )}
+
               <p>&nbsp;</p>
 
               {this.props.posts.map((post, key) => {
@@ -122,7 +128,9 @@ class Main extends Component {
                           30
                         ).toString()}`}
                       />
-                      <small className="text-muted">{post.author}</small>
+                      <small className="text-muted">
+                        {this.props.accounts[post.author]}
+                      </small>
                     </div>
                     <ul id="postList" className="list-group list-group-flush">
                       <li className="list-group-item">
@@ -140,12 +148,16 @@ class Main extends Component {
                           Status:{" "}
                           {post.approval_status ? "Approved " : "Not Approved"}
                         </small>
-                        <button
-                          className="btn btn-success btn-sm float-right pt-0"
-                          onClick={this.approvePost(post.id)}
-                        >
-                          Approve This
-                        </button>
+                        {this.props.accounts[this.props.account] == "Chief" ? (
+                          <button
+                            className="btn btn-success btn-sm float-right pt-0"
+                            onClick={this.approvePost(post.id)}
+                          >
+                            Approve This
+                          </button>
+                        ) : (
+                          <span></span>
+                        )}
                       </li>
                     </ul>
                   </div>

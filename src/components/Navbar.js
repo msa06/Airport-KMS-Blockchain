@@ -9,9 +9,10 @@ class Navbar extends Component {
           Airport System
         </a>
         <li className="nav-item text-nowrap d-none d-sm-none d-sm-block px-3">
-          <small className="text-secondary ">
-            <small id="account">{this.props.account}</small>
-          </small>
+          <span id="account" className="text-white h5">
+            {this.props.accounts[this.props.account]}
+          </span>
+
           {this.props.account ? (
             <img
               className="ml-2"

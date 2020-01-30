@@ -10,6 +10,7 @@ class App extends Component {
   async componentWillMount() {
     await this.loadWeb3();
     await this.loadBlockchainData();
+    // await this.checkUser();
   }
 
   async loadWeb3() {
@@ -48,35 +49,22 @@ class App extends Component {
           posts: [...this.state.posts, post]
         });
       }
-      // Sort posts. Show highest tipped posts first
-      // this.setState({
-      //   posts: this.state.posts.sort((a, b) => b.tipAmount - a.tipAmount)
-      // });
+
       this.setState({ loading: false });
     } else {
       window.alert("SocialNetwork contract not deployed to detected network.");
     }
   }
 
-  createPost(content) {
-    this.setState({ loading: true });
-    this.state.socialNetwork.methods
-      .createPost(content)
-      .send({ from: this.state.account })
-      .on("receipt", receipt => {
-        this.setState({ loading: false });
-      });
-  }
+  // async checkUser() {
+  //   this.state.accounts.forEach((val, ind) => {
+  //     if (val == this.state.account) {
+  //       var currentUser = this.state.accountName[ind];
 
-  tipPost(id, tipAmount) {
-    this.setState({ loading: true });
-    this.state.socialNetwork.methods
-      .tipPost(id)
-      .send({ from: this.state.account, value: tipAmount })
-      .on("receipt", receipt => {
-        this.setState({ loading: false });
-      });
-  }
+  //       this.setState({ currentUser });
+  //     }
+  //   });
+  // }
 
   constructor(props) {
     super(props);
@@ -85,17 +73,19 @@ class App extends Component {
       airportDatabase: null,
       postCount: 0,
       posts: [],
-      loading: true
+      loading: false,
+      accounts: {
+        "0x16d5D02500185fF0b887b9BF8715e461B649afA7": "Deputy",
+        "0xd1D9c9CfD55350cE2861F33EDb082A01fe19aeC2": "Chief",
+        "0x07CC72c9A488EF452b132E349eD19e1038Aa1f5c": "The Project Manager"
+      }
     };
-
-    // this.createPost = this.createPost.bind(this);
-    // this.tipPost = this.tipPost.bind(this);
   }
 
   render() {
     return (
       <div>
-        <Navbar account={this.state.account} />
+        <Navbar accounts={this.state.accounts} account={this.state.account} />
         {this.state.loading ? (
           <div id="loader" className="text-center mt-5">
             <p>Loading...</p>
@@ -107,6 +97,7 @@ class App extends Component {
             tipPost={this.tipPost}
             account={this.state.account}
             airportDatabase={this.state.airportDatabase}
+            accounts={this.state.accounts}
           />
         )}
       </div>
