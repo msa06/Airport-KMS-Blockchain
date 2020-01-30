@@ -150,10 +150,14 @@ class Main extends Component {
                         </small>
                         {this.props.accounts[this.props.account] == "Chief" ? (
                           <button
-                            className="btn btn-success btn-sm float-right pt-0"
+                            className={`btn ${
+                              post.approval_status
+                                ? "btn-secondary"
+                                : "btn-success"
+                            } btn-sm float-right pt-0`}
                             onClick={this.approvePost(post.id)}
                           >
-                            Approve This
+                            {post.approval_status ? "Approved" : "Approve This"}
                           </button>
                         ) : (
                           <span></span>
