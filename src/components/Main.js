@@ -134,14 +134,15 @@ class Main extends Component {
                     </div>
                     <ul id="postList" className="list-group list-group-flush">
                       <li className="list-group-item">
-                        <p>{post.filename}</p>
-                      </li>
-                      <li className="list-group-item">
-                        <img
-                          src={`https://ipfs.infura.io/ipfs/${post.filehash}`}
-                          width="400px"
-                          height="auto"
-                        />
+                        <p>
+                          {" "}
+                          <a
+                            href={`https://ipfs.infura.io/ipfs/${post.filehash}`}
+                            target="_blank"
+                          >
+                            {post.filename}
+                          </a>
+                        </p>
                       </li>
                       <li key={key} className="list-group-item py-2">
                         <small className="float-left mt-1 text-muted">

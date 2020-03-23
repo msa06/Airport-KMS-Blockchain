@@ -46,6 +46,7 @@ contract AirportDatabase {
             msg.sender
         );
 
+
         // Trigger Event
         emit PostCreated(postCount, _filehash, _filename, false, msg.sender);
     }
